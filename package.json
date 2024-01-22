@@ -1,0 +1,19 @@
+{
+  "name": "watch-shop",
+  "version": "1.0.0",
+  "description": "dev huyvu",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hahuyvu975/watch-shop.git"
+  },
+  "author": "huy vu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hahuyvu975/watch-shop/issues"
+  },
+  "homepage": "https://github.com/hahuyvu975/watch-shop#readme"
+}
