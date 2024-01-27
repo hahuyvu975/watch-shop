@@ -13,7 +13,7 @@ const Header = () => {
                         <Link to="/" className="navbar-brand"><PiWatchFill style={{}}/> Watch Shop</Link>
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <NavLink to="/home" className="nav-link"  >Home</NavLink>
+                                <NavLink to="/" className="nav-link"  >Home</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink to="/category" className="nav-link" >Category</NavLink>
@@ -25,7 +25,7 @@ const Header = () => {
                                 <NavLink to="/signup" className="nav-link" >Sign up</NavLink>
                             </li>
                             <li className="nav-item">
-                                <a to="/cart" className="nav-link" >Cart (0)</a>
+                                <NavLink to="/cart" className="nav-link" >Cart (0)</NavLink>
                             </li>
                         </ul>
                     </div>
