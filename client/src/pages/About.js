@@ -3,7 +3,7 @@ import Layout from '../components/Layout/Layout'
 
 const About = () => {
   return (
-    <Layout>
+    <Layout title={"About us - Watch Shop"}>
       <div className="container mt-5">
         <div className="row">
           <div className="col-md-6 order-md-1">

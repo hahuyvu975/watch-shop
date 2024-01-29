@@ -3,7 +3,7 @@ import Layout from '../components/Layout/Layout'
 import { BiSupport, BiMailSend, BiPhoneCall } from "react-icons/bi";
 const Contact = () => {
   return (
-    <Layout>
+    <Layout title={"Contact Us"}>
       <div className="container mt-5">
         <div className="row">
           <div className="col-md-6 order-md-1">
@@ -16,7 +16,7 @@ const Contact = () => {
           <div className="col-md-6 order-md-2">
             <h2>Contact Us</h2>
             <p className='text-justify mt-2'>
-              Any query and info about product feel free to call anytime we 24/7 vaialible
+              Any question and info about product feel free to call anytime we 24/7 vaialible
             </p>
             <p className='mt-3'>
               <BiMailSend /> : www.hahuyvu975@watchshop.com
