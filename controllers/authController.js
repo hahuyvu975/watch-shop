@@ -7,14 +7,15 @@ export const registerController = async (req, res) => {
         const requiredFields = ['name', 'email', 'password', 'phone', 'address'];
         const { name, email, password, phone, address, role } = req.body;
         if (!requiredFields.every(field => req.body[field])) {
-            return res.send({ error: 'All fields are required' });
+            return res.send({ message: 'All fields are required' });
         }
         console.log('email:', req.body['email']);
         //exisiting user
         const exisitingUser = await userModel.findOne({ email });
         if (exisitingUser) {
-            return res.status(200).send({
-                success: true,
+            console.log("Existing user")
+            return res.status(201).send({
+                success: false,
                 message: 'Already register please login!'
             });
         };
