@@ -16,8 +16,8 @@ export const requireSignIn = async (req, res, next) => {
     } catch (error) {
         return res.status(404).send({
             success: false,
-            message: "Invalid signature"
-        })
+            message: "Invalid token"
+        });
     }
 }
 
