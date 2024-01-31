@@ -24,7 +24,8 @@ const Register = () => {
             })
             if (res && res.data.success) {
                 toast.success(res.data.message);
-                navigate('/login');
+                setTimeout(() => navigate('/login'), 2000 )
+                ;
             } else {
                 toast.error(res.data.message);
                 console.log('false')
@@ -39,7 +40,7 @@ const Register = () => {
             <div className='register-bg'>
                 <div className='form-container'>
                     <form onSubmit={handleSubmit}>
-                    <h4 className='title'>REGISTER FORM</h4>
+                        <h4 className='title'>REGISTER FORM</h4>
                         <div className="mb-3">
                             <label htmlFor="InputName">Name</label>
                             <input
@@ -80,10 +81,10 @@ const Register = () => {
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                                 className="form-control"
-                                id="InputPhone" 
+                                id="InputPhone"
                                 required
-                                />
-                            
+                            />
+
                         </div>
                         <div className="mb-3">
                             <label htmlFor="InputAddress">Address</label>
