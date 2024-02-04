@@ -19,6 +19,7 @@ const Login = () => {
                 email,
                 password,
             });
+            console.log(res.data);
             if (res && res.data.success) {
                 toast.success(res.data.message);
                 setAuth({
@@ -26,7 +27,7 @@ const Login = () => {
                     user: res.data.user,
                     token: res.data.token
                 });
-                localStorage.setItem("auth", JSON.stringify(res.data.token))
+                localStorage.setItem("auth", JSON.stringify(res.data))
                 setTimeout(() => navigate('/'), 1000);
             } else {
                 toast.error(res.data.message);
