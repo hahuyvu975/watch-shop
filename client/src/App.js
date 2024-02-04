@@ -7,6 +7,7 @@ import Page404 from './pages/Page404';
 import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
 import DashBoard from './pages/user/DashBoard';
+import PrivateRoute from './components/Routes/Private';
 
 
 function App() {
@@ -19,11 +20,12 @@ function App() {
         <Route path='/policy' element={<Policy />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/dashboard' element={<DashBoard />} />
+        <Route path='/dashboard' element={<PrivateRoute />}>
+          <Route path='' element={<DashBoard />} />
+        </Route>
         <Route path='/*' element={<Page404 />} />
       </Routes>
     </>
-
   );
 }
 
