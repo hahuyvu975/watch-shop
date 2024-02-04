@@ -1,10 +1,11 @@
+import { Model } from 'mongoose';
 import { comparePassword, hashPassword } from '../helpers/authHelper.js';
 import userModel from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
 
 export const registerController = async (req, res) => {
     try {
-        const requiredFields = ['name', 'email', 'password', 'phone', 'address'];
+        const requiredFields = ['name', 'email', 'password', 'phone', 'address', 'question'];
         const { name, email, password, phone, address, role } = req.body;
         if (!requiredFields.every(field => req.body[field])) {
             return res.send({ message: 'All fields are required' });
@@ -29,6 +30,8 @@ export const registerController = async (req, res) => {
             phone,
             address,
             role
+        }, {
+            new: true
         }).save();
 
         return res.status(200).send({
@@ -96,4 +99,50 @@ export const testController = (req, res) => {
         message: 'test successfully'
     });
 };
+
+export const forgotPasswordController = async (req, res) => {
+    try {
+        const { email, answer, newPassword } = req.body;
+        const requiredForgotPw = ['email', 'answer', 'newPassword'];
+        if (!requiredForgotPw.every(field => req.body[field])) {
+            return res.status(403).send({
+                success: false,
+                message: "All fields are required"
+            })
+        }
+
+        const user = await userModel.findOne({
+            email, answer
+        });
+        const hashNewPassword = await hashPassword(newPassword);
+        if (!user) {
+            return res.status(403).send({
+                success: false,
+                message: 'Invalid Email or Answer'
+            })
+        }
+        const updatePwOfUser = await userModel.findByIdAndUpdate(
+            user._id,
+            {
+                password: hashNewPassword
+            },
+            {
+                new: true
+            });
+        return res.status(201).send({
+            updatePwOfUser,
+            success: true,
+            message: 'Change password successfully'
+        })
+    } catch (error) {
+        console.log('error');
+        return res
+            .status(404)
+            .send({
+                success: false,
+                message: "Error forgot password",
+                error
+            })
+    }
+}
 
