@@ -2,9 +2,26 @@ import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { PiWatchFill } from 'react-icons/pi';
 import { useAuth } from '../../context/auth';
+import { toast } from 'react-hot-toast';
 
 const Header = () => {
     const [auth, setAuth] = useAuth();
+
+    const handleLogOut = () => {
+        try {
+            setAuth({
+                ...auth,
+                user: null,
+                token: ""
+            });
+            localStorage.removeItem("auth");
+            toast.success("Logged out successfully");
+        } catch (error) {
+            toast.error("Error");
+            console.log(error);
+        }
+
+    }
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-light">
@@ -30,7 +47,7 @@ const Header = () => {
                                         <NavLink to="/register" className="nav-link" >Register</NavLink>
                                     </li>
                                 </>) : (<>
-                                    <NavLink to="/login" className="nav-link">
+                                    <NavLink onClick={handleLogOut} to="/login" className="nav-link">
                                         LogOut
                                     </NavLink>
                                 </>)
