@@ -2,13 +2,13 @@
   "name": "watch-shop",
   "version": "1.0.0",
   "description": "dev huyvu",
-  "main": "serveri.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run server\" \"npm start\"",
     "server": "nodemon server.js",
-    "client": "cd client && npm start"
+    "start": "cd client && npm start"
   },
   "repository": {
     "type": "git",
