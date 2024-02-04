@@ -1,7 +1,10 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { PiWatchFill } from 'react-icons/pi';
+import { useAuth } from '../../context/auth';
+
 const Header = () => {
+    const [auth, setAuth] = useAuth();
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-light">
@@ -18,12 +21,20 @@ const Header = () => {
                             <li className="nav-item">
                                 <NavLink to="/category" className="nav-link" >Category</NavLink>
                             </li>
-                            <li className="nav-item">
-                                <NavLink to="/login" className="nav-link"  >Login</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to="/register" className="nav-link" >Register</NavLink>
-                            </li>
+                            {
+                                !auth.user ? (<>
+                                    <li className="nav-item">
+                                        <NavLink to="/login" className="nav-link"  >Login</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink to="/register" className="nav-link" >Register</NavLink>
+                                    </li>
+                                </>) : (<>
+                                    <NavLink to="/login" className="nav-link">
+                                        LogOut
+                                    </NavLink>
+                                </>)
+                            }
                             <li className="nav-item">
                                 <NavLink to="/cart" className="nav-link" >Cart (0)</NavLink>
                             </li>
