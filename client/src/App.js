@@ -6,9 +6,11 @@ import Policy from './pages/Policy';
 import Page404 from './pages/Page404';
 import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
-import DashBoard from './pages/user/DashBoard';
+import DashBoard from './pages/User/DashBoard';
 import PrivateRoute from './components/Routes/Private';
 import ForgotPassword from './pages/Auth/ForgotPassword';
+import AdminDashBoard from './pages/Admin/AdminDashBoard';
+import AdminRoute from './components/Routes/AdminRoute';
 
 
 function App() {
@@ -23,7 +25,10 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/dashboard' element={<PrivateRoute />}>
-          <Route path='' element={<DashBoard />} />
+          <Route path='user' element={<DashBoard />} />
+        </Route>
+        <Route path='/dashboard' element={<AdminRoute />}>
+          <Route path='admin' element={<AdminDashBoard />} />
         </Route>
         <Route path='/*' element={<Page404 />} />
       </Routes>
