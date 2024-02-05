@@ -36,7 +36,7 @@ const Login = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error('Register failed');
+            toast.error('Login failed');
         }
     }
     return (
