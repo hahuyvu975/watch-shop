@@ -5,10 +5,13 @@ import jwt from 'jsonwebtoken';
 
 export const registerController = async (req, res) => {
     try {
-        const requiredFields = ['name', 'email', 'password', 'phone', 'address', 'question'];
-        const { name, email, password, phone, address, role } = req.body;
+        const requiredFields = ['name', 'email', 'password', 'phone', 'address', 'answer'];
+        const { name, email, password, phone, address, answer } = req.body;
         if (!requiredFields.every(field => req.body[field])) {
-            return res.send({ message: 'All fields are required' });
+            return res.status(403).send({
+                success: false,
+                message: 'All fields are required'
+            });
         }
         console.log('email:', req.body['email']);
         //exisiting user
@@ -23,16 +26,14 @@ export const registerController = async (req, res) => {
 
         //register user
         const hashedPassword = await hashPassword(password);
-        const user = new userModel({
+        const user = await userModel.create({
             name,
             email,
             password: hashedPassword,
             phone,
             address,
-            role
-        }, {
-            new: true
-        }).save();
+            answer
+        });
 
         return res.status(200).send({
             success: true,
@@ -77,6 +78,7 @@ export const loginController = async (req, res) => {
             success: true,
             message: "Login successfully",
             user: {
+                _id: user._id,
                 name: user.name,
                 email: user.email,
                 phone: user.phone,
