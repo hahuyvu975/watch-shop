@@ -16,7 +16,7 @@ export const requireSignIn = async (req, res, next) => {
     } catch (error) {
         return res.status(404).send({
             success: false,
-            message: "Invalid token"
+            message: "Error in Require SignIn"
         });
     }
 }
@@ -37,7 +37,7 @@ export const isAdmin = async (req, res, next) => {
     } catch (error) {
         return res.status(404).send({
             success: false,
-            message: "You are NOT admin"
+            message: "Error in isAdmin"
         })
     }
 }
