@@ -7,7 +7,7 @@ const AdminDashBoard = () => {
   const [auth, setAuth] = useAuth();
   return (
     <Layout>
-      <div className='container-fluid m-3 m-3'>
+      <div className='container-fluip-3'>
         <div className='row'>
           <div className='col-md-3'>
             <AdminMenu />
