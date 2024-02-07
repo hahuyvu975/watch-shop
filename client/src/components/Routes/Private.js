@@ -16,6 +16,7 @@ export default function PrivateRoute() {
             } else {
                 setMessage(false);
             }
+            console.log('test');
         }
         if (auth?.token) authCheck();
     }, [auth?.token]);
