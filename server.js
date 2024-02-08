@@ -5,7 +5,9 @@ import morgan from "morgan";
 import cors from 'cors';
 import connectDB from "./config/db.js";
 import authRoutes from "./routers/authRoute.js"
-import categoryRoute from './routers/categoryRoute.js'
+import categoryRoutes from './routers/categoryRoute.js';
+import productRoutes from './routers/productRoute.js';
+
 //configure env'
 dotenv.config();
 
@@ -22,8 +24,10 @@ app.use(morgan('dev'))
 
 //routes
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/admin/category', categoryRoute);
-//rest api
+app.use('/api/v1/admin/category', categoryRoutes);
+app.use('/api/v1/admin/product', productRoutes);
+
+//test server
 app.get('/', (req, res) => {
     res.send({ message: 'Welcome hivu2024' })
 });
