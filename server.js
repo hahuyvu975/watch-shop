@@ -22,10 +22,10 @@ app.use(morgan('dev'))
 
 //routes
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/category', categoryRoute);
+app.use('/api/v1/admin/category', categoryRoute);
 //rest api
-app.get('/', (req,res) => {
-    res.send({message: 'Welcome hivu2024'})
+app.get('/', (req, res) => {
+    res.send({ message: 'Welcome hivu2024' })
 });
 
 //PORT
