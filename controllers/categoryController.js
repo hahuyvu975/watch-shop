@@ -11,7 +11,8 @@ export const createCategoryController = async (req, res) => {
                 success: false,
                 message: "All fields are required!"
             })
-        }
+        };
+
         const exsistingCategory = await categoryModel.findOne({ name });
         if (exsistingCategory) return res.status(401).send({
             success: false,
@@ -31,7 +32,8 @@ export const createCategoryController = async (req, res) => {
         console.log("Error: Create Category!");
         return res.status(500).send({
             success: false,
-            message: "Error in Create Category"
+            message: "Error in Create Category",
+            error: error.message
         });
     }
 };
@@ -54,7 +56,8 @@ export const updateCategoryController = async (req, res) => {
     } catch (error) {
         return res.status(500).send({
             success: false,
-            message: "Error in update category"
+            message: "Error in update category",
+            error: error.message
         });
     }
 };
@@ -70,7 +73,8 @@ export const getAllCategoryController = async (req, res) => {
     } catch (error) {
         return res.status(500).send({
             success: false,
-            message: "Error in get all category"
+            message: "Error in get all category",
+            error: error.message
         });
     }
 };
@@ -101,8 +105,8 @@ export const singleCategoryController = async (req, res) => {
 export const deleteCategoryController = async (req, res) => {
     try {
         const { id } = req.params;
-        console.log(id)
-        const removeCategory =  await categoryModel.findByIdAndDelete(id);
+
+        await categoryModel.findByIdAndDelete(id);
         
         return res.status(200).send({
             success: true,
