@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const productSchema = new mongoose.SchemaType({
+const productSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -17,7 +17,7 @@ const productSchema = new mongoose.SchemaType({
         type: Number,
         required: true
     },
-    category: {
+    categories: {
         type: mongoose.ObjectId,
         ref: 'Categories',
         required: true,
@@ -27,12 +27,12 @@ const productSchema = new mongoose.SchemaType({
         required: true
     },
     photo: {
-        type: Buffer,
+        data: Buffer,
         contentType: String
     },
     shipping: {
         type: Boolean,
     }
-}, {timestamps: true});
+}, { timestamps: true });
 
 export default mongoose.model('products', productSchema)
