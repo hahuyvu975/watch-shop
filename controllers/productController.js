@@ -65,8 +65,61 @@ export const getAllProductController = async (req, res) => {
     } catch (error) {
         return res.status(500).send({
             success: false,
-            message: "Error in create product",
+            message: "Error in get all products",
             error: error.message
         })
+    }
+};
+
+export const getSingleProductController = async (req, res) => {
+    try {
+        const { slug } = req.params;
+
+        const product = await productModel
+            .findOne({ slug })
+            .select('-photo')
+            .populate('categories');
+
+        if (!product) return res.status(500).send({
+            success: false,
+            message: "Not found product by slug"
+        });
+
+        return res.status(200).send({
+            success: true,
+            message: "Get single product successfully",
+            product
+        });
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: "Error in get single product",
+            error: error.message
+        });
+    }
+};
+
+export const productPhotoController = async (req, res) => {
+    try {
+        const { pid } = req.params;
+        console.log(pid);
+        const product = await productModel.findById(pid).select("photo");
+
+        if (!product.photo.data) return res.status(500).send({
+            success: false,
+            message: "Not found photo",
+        });
+        console.log(product.photo.data);
+        return res
+            .status(200)
+            .set("Content-type", product.photo.contentType)
+            .send((product.photo.data));
+
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: "Error in get photo",
+            error: error.message
+        });
     }
 }
