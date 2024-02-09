@@ -33,15 +33,15 @@ export const createProductController = async (req, res) => {
             success: true,
             message: "Create product successfully",
             product
-        })
+        });
     } catch (error) {
         return res.status(500).send({
             success: false,
             message: "Error in create product",
             error: error.message
-        })
+        });
     }
-}
+};
 
 export const getAllProductController = async (req, res) => {
     try {
@@ -141,6 +141,45 @@ export const deleteProductController = async (req, res) => {
         return res.status(500).send({
             success: false,
             message: "Error in delete photo",
+            error: error.message
+        });
+    }
+};
+
+export const updateProductController = async (req, res) => {
+    try {
+        const { name } = req.fields;
+        const { photo } = req.files;
+        
+        if (photo.size > 1000000) return res.status(500).send({
+            success: false,
+            message: "Photo should be less than 1mb"
+        })
+
+        const product = await productModel.findByIdAndUpdate(req.params.id,
+            {
+                ...req.fields,
+                photo: {
+                    data: fs.readFileSync(photo.path),
+                    contentType: photo.type
+                },
+                slug: slugify(name)
+            },
+            {
+                new: true
+            });
+
+        return res
+            .status(200)
+            .send({
+                success: true,
+                message: "Updated photo successfully",
+                product
+            });
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: "Error in update photo",
             error: error.message
         });
     }
