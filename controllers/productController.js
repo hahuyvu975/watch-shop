@@ -102,14 +102,13 @@ export const getSingleProductController = async (req, res) => {
 export const productPhotoController = async (req, res) => {
     try {
         const { pid } = req.params;
-        console.log(pid);
-        const product = await productModel.findById(pid).select("photo");
 
+        const product = await productModel.findById(pid).select("photo");
         if (!product.photo.data) return res.status(500).send({
             success: false,
             message: "Not found photo",
         });
-        console.log(product.photo.data);
+
         return res
             .status(200)
             .set("Content-type", product.photo.contentType)
@@ -122,4 +121,28 @@ export const productPhotoController = async (req, res) => {
             error: error.message
         });
     }
+};
+
+export const deleteProductController = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const removeProduct = await productModel.findByIdAndDelete(id);
+        if (!removeProduct) return res.status(500).send({
+            success: false,
+            message: "Not found product to remove",
+        });
+
+        return res.status(200).send({
+            success: true,
+            message: "Remove product successfully",
+        });
+
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: "Error in delete photo",
+            error: error.message
+        });
+    }
 }
+
