@@ -1,34 +1,65 @@
-import React, { useEffect, useState } from 'react'
-import Layout from '../../components/Layout/Layout'
-import AdminMenu from '../../components/Layout/AdminMenu'
+import React, { useEffect, useState } from 'react';
+import Layout from '../../components/Layout/Layout';
+import AdminMenu from '../../components/Layout/AdminMenu';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import CategoryForm from '../../components/Form/CategoryForm';
 
 const CreateCategory = () => {
     const [categories, setCategories] = useState([]);
-    const navigate = useNavigate();
+    const [name, setName] = useState('');
+
+    //handle create category in form
+    const handleCreateCategory = async (e) => {
+        e.preventDefault();
+        try {
+            const { data } = await axios.post('/api/v1/admin/category/create-category', { name });
+            if (data?.success) {
+                await getAllCategories();
+                toast.success(data.message);
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Error in create category");
+        }
+    };
 
     //get all categories
     const getAllCategories = async () => {
         try {
             const { data } = await axios.get('/api/v1/admin/category/get-category');
-            console.log(data.categories[0]);
             if (data.success) {
                 setCategories(data.categories);
+            } else {
+                toast.error(data.message);
             }
         } catch (error) {
             toast.error("Error: Show list categories")
         }
     };
 
+    const handleDeleteCategory = async (id) => {
+        try {
+            const removeCategory = await axios.delete(`/api/v1/admin/category/delete-category/${id}`)
+            await getAllCategories();
+            toast.success('Remove successfully');
+        } catch (error) {
+            toast.error("Error: Remove category")
+        }
+    };
+    // handle update category 
+    const handleEditCategory = () => {
+
+    };
+
+
     useEffect(() => {
         getAllCategories();
     }, []);
 
-    const handleCategoryForm = () => {
-        navigate('/api/v1/admin/update-category');
-    }
+    
 
     return (
         <Layout title={"Dashboard - Create Category"}>
@@ -39,6 +70,13 @@ const CreateCategory = () => {
                     </div>
                     <div className='col-md-9'>
                         <h1>Manage Category</h1>
+                        <div className='p-3 w-50'>
+                            <CategoryForm
+                                handleSubmit={handleCreateCategory}
+                                value={name}
+                                setValue={setName}
+                            />
+                        </div>
                         <div className="w-75">
                             <table className="table">
                                 <thead>
@@ -49,12 +87,13 @@ const CreateCategory = () => {
                                 </thead>
                                 <tbody>
                                     {categories?.map((c) => (
-                                            <tr key={c._id}>
-                                                <td>{c.name}</td>
-                                                <td>
-                                                    <button className='btn btn-primary' onClick={handleCategoryForm}>Edit</button>
-                                                </td>
-                                            </tr>
+                                        <tr key={c._id}>
+                                            <td>{c.name}</td>
+                                            <td>
+                                                <button className='btn btn-primary ms-2' onClick={handleEditCategory}>Edit</button>
+                                                <button className='btn btn-danger ms-2' onClick={() => handleDeleteCategory(c._id)}>Delete</button>
+                                            </td>
+                                        </tr>
                                     ))}
                                 </tbody>
                             </table>
