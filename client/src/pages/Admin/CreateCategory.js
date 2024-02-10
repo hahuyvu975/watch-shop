@@ -4,10 +4,14 @@ import AdminMenu from '../../components/Layout/AdminMenu';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import CategoryForm from '../../components/Form/CategoryForm';
+import { Button, Modal } from 'antd';
 
 const CreateCategory = () => {
     const [categories, setCategories] = useState([]);
     const [name, setName] = useState('');
+    const [visibale, setVisible] = useState(false);
+    const [selected, setSelected] = useState(null);
+    const [updatedName, setUpdatedName] = useState("");
 
     //handle create category in form
     const handleCreateCategory = async (e) => {
@@ -50,8 +54,24 @@ const CreateCategory = () => {
         }
     };
     // handle update category 
-    const handleEditCategory = () => {
-
+    const handleUpdateCategory = async (e) => {
+        e.preventDefault();
+        try {
+            const { data } = await axios.put(`/api/v1/admin/category/update-category/${selected._id}`, { name: updatedName });
+            console.log(data)
+            if (data?.success) {
+                setSelected(null);
+                setUpdatedName("");
+                setVisible(false);
+                await getAllCategories();
+                toast.success(data.message);
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Error in update category");
+        }
     };
 
 
@@ -59,7 +79,7 @@ const CreateCategory = () => {
         getAllCategories();
     }, []);
 
-    
+
 
     return (
         <Layout title={"Dashboard - Create Category"}>
@@ -90,14 +110,33 @@ const CreateCategory = () => {
                                         <tr key={c._id}>
                                             <td>{c.name}</td>
                                             <td>
-                                                <button className='btn btn-primary ms-2' onClick={handleEditCategory}>Edit</button>
-                                                <button className='btn btn-danger ms-2' onClick={() => handleDeleteCategory(c._id)}>Delete</button>
+                                                <button
+                                                    className='btn btn-primary ms-2'
+                                                    onClick={() => {
+                                                        setVisible(true);
+                                                        setUpdatedName(c.name)
+                                                        setSelected(c)
+                                                    }}>
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    className='btn btn-danger ms-2'
+                                                    onClick={() => handleDeleteCategory(c._id)}>
+                                                    Delete
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
+                        <Modal
+                            onCancel={() => setVisible(false)}
+                            footer={null}
+                            open={visibale}
+                        >
+                            <CategoryForm value={updatedName} setValue={setUpdatedName} handleSubmit={handleUpdateCategory} />
+                        </Modal>
                     </div>
                 </div>
             </div>
