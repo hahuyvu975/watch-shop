@@ -4,7 +4,7 @@ import AdminMenu from '../../components/Layout/AdminMenu';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import CategoryForm from '../../components/Form/CategoryForm';
-import { Button, Modal } from 'antd';
+import { Modal } from 'antd';
 
 const CreateCategory = () => {
     const [categories, setCategories] = useState([]);
@@ -46,7 +46,7 @@ const CreateCategory = () => {
 
     const handleDeleteCategory = async (id) => {
         try {
-            const removeCategory = await axios.delete(`/api/v1/admin/category/delete-category/${id}`)
+            await axios.delete(`/api/v1/admin/category/delete-category/${id}`)
             await getAllCategories();
             toast.success('Remove successfully');
         } catch (error) {
