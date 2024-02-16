@@ -4,8 +4,8 @@ import slugify from 'slugify';
 
 export const createProductController = async (req, res) => {
     try {
-        const requiredFields = ['name', 'description', 'price', 'categories', 'quantity'];
-        const { name, slug, description, price, categories, quantity, shipping } = req.fields;
+        const requiredFields = ['name', 'description', 'price', 'category', 'quantity'];
+        const { name } = req.fields;
         const { photo } = req.files;
 
         if (!requiredFields.every(field => req.fields[field])) {
@@ -46,15 +46,15 @@ export const createProductController = async (req, res) => {
 export const getAllProductController = async (req, res) => {
     try {
         //---extension if divide data by page
-        const page = parseInt(req.query.page) || 1;
-        const pageSize = 10;
-        const skip = (page - 1) * pageSize;
+        // const page = parseInt(req.query.page) || 1;
+        // const pageSize = 10;
+        // const skip = (page - 1) * pageSize;
 
         const products = await productModel
             .find({})
             .select("-photo")
             .limit(10)
-            .skip(skip)
+            .skip(0)
             .sort({ createdAt: -1 })
         return res.status(200).send({
             success: true,
@@ -150,7 +150,7 @@ export const updateProductController = async (req, res) => {
     try {
         const { name } = req.fields;
         const { photo } = req.files;
-        
+
         if (photo.size > 1000000) return res.status(500).send({
             success: false,
             message: "Photo should be less than 1mb"
