@@ -9,6 +9,9 @@ const router = express.Router();
 //create-product
 router.post('/create-product', requireSignIn, isAdmin, formidable(), createProductController);
 
+//update product
+router.put('/update-product/:id', requireSignIn, isAdmin, formidable(), updateProductController);
+
 //get all product
 router.get('/get-product', requireSignIn, isAdmin, getAllProductController);
 
@@ -16,12 +19,9 @@ router.get('/get-product', requireSignIn, isAdmin, getAllProductController);
 router.get('/single-product/:slug', requireSignIn, isAdmin, getSingleProductController)
 
 //get photo
-router.get('/product-photo/:pid', requireSignIn, isAdmin, productPhotoController)
+router.get('/product-photo/:pid', productPhotoController)
 
 //delete product
 router.delete('/delete-product/:id', requireSignIn, isAdmin, deleteProductController);
-
-//update product
-router.put('/update-product/:id', requireSignIn, isAdmin, formidable(), updateProductController);
 
 export default router;
