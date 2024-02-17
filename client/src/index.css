@@ -85,3 +85,19 @@
     height: 70vh;
     flex-direction: column;
 }
+
+/* Products */
+.product-link {
+    text-decoration: none !important;
+    color: black !important;
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-container .card {
+    flex: 0 0 calc(33.33% - 1rem);
+    margin: 0.5rem;
+}
