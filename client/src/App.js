@@ -16,6 +16,7 @@ import CreateProduct from './pages/Admin/CreateProduct';
 import Users from './pages/Admin/Users';
 import Profile from './pages/User/Profile';
 import Orders from './pages/User/Orders';
+import Products from './pages/Admin/Products';
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
           <Route path='admin/create-category' element={<CreateCategory />} />
           <Route path='admin/create-product' element={<CreateProduct />} />
           <Route path='admin/users' element={<Users />} />
+          <Route path='admin/products' element={<Products />}/>
         </Route>
 
         <Route path='/*' element={<Page404 />} />
