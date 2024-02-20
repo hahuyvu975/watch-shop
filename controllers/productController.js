@@ -78,7 +78,7 @@ export const getSingleProductController = async (req, res) => {
         const product = await productModel
             .findOne({ slug })
             .select('-photo')
-            .populate('categories');
+            .populate('category');
 
         if (!product) return res.status(500).send({
             success: false,
@@ -91,7 +91,7 @@ export const getSingleProductController = async (req, res) => {
             product
         });
     } catch (error) {
-        return res.status(500).send({
+        return res.status(505).send({
             success: false,
             message: "Error in get single product",
             error: error.message
