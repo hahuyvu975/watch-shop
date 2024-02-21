@@ -148,10 +148,17 @@ export const deleteProductController = async (req, res) => {
 
 export const updateProductController = async (req, res) => {
     try {
+        const requiredFields = ['name', 'description', 'price', 'category', 'quantity'];
         const { name } = req.fields;
         const { photo } = req.files;
+        if (!requiredFields.every(field => req.fields[field])) {
+            return res.status(501).send({
+                success: false,
+                message: "All fields are required"
+            });
+        };
 
-        if (photo.size > 1000000) return res.status(500).send({
+        if (photo && photo.size > 1000000) return res.status(502).send({
             success: false,
             message: "Photo should be less than 1mb"
         })
@@ -173,13 +180,13 @@ export const updateProductController = async (req, res) => {
             .status(200)
             .send({
                 success: true,
-                message: "Updated photo successfully",
+                message: "Updated product successfully",
                 product
             });
     } catch (error) {
-        return res.status(500).send({
+        return res.status(506).send({
             success: false,
-            message: "Error in update photo",
+            message: "Error in update product",
             error: error.message
         });
     }
