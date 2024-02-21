@@ -3,17 +3,15 @@ import Layout from '../../components/Layout/Layout';
 import AdminMenu from '../../components/Layout/AdminMenu';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
-
+    const navigate = useNavigate();
     // get all products
     const getAllProducts = async () => {
         try {
             const { data } = await axios.get('/api/v1/admin/product/get-product');
-            const photo = await axios.get(`/api/v1/admin/product/product-photo/65cf20958977dddfcc8abd32`)
-            console.log('image', photo);
             if (data?.success) {
                 toast.success(data?.message);
                 setProducts(data?.products);
@@ -26,19 +24,31 @@ const Products = () => {
         }
     }
 
+    const navigateToAddProductPage = () => {
+        navigate('/dashboard/admin/create-product');
+    }
+
     useEffect(() => {
         getAllProducts();
     }, []);
 
     return (
         <Layout>
-            <div className="row dashboard">
+            <div className="row">
                 <div className="col-md-3">
                     <AdminMenu />
                 </div>
                 <div className="col-md-9 ">
                     <h1 className="text-center">All Products List</h1>
-                    <div className="d-flex flex-wrap">
+                    <div className='mt-3 ml-3'>
+                        <button
+                            className="btn btn-success"
+                            onClick={() => navigateToAddProductPage()}
+                        >
+                            Add Product
+                        </button>
+                    </div>
+                    <div className="d-flex flex-wrap mt-3">
                         {products?.map((p) => (
                             <Link
                                 key={p._id}
