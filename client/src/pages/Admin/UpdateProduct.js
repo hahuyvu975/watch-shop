@@ -31,11 +31,10 @@ const UpdateProduct = () => {
             setId(data.product._id);
             setDescription(data.product.description);
             setPrice(data.product.price);
-            setPrice(data.product.price);
             setQuantity(data.product.quantity);
             setShipping(data.product.shipping);
             setCategory(data.product.category._id);
-            console.log(data.product._id)
+            
         } catch (error) {
             console.log(error);
         }
@@ -53,12 +52,13 @@ const UpdateProduct = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error("Something wwent wrong in getting catgeory");
+            toast.error("Error in get all category");
         }
     };
 
     useEffect(() => {
         getAllCategory();
+        getSingleProduct();
     }, []);
 
     //create product function
@@ -72,6 +72,7 @@ const UpdateProduct = () => {
             productData.append("quantity", quantity);
             photo && productData.append("photo", photo);
             productData.append("category", category);
+
             const { data } = await axios.put(
                 `/api/v1/admin/product/update-product/${id}`,
                 productData
@@ -84,7 +85,7 @@ const UpdateProduct = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error("something went wrong");
+            toast.error("Error in handle update product");
         }
     };
 
@@ -96,11 +97,11 @@ const UpdateProduct = () => {
             const { data } = await axios.delete(
                 `/api/v1/admin/product/delete-product/${id}`
             );
-            toast.success("Product deleted Succfully");
+            toast.success("Product deleted successfully");
             navigate("/dashboard/admin/products");
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong");
+            toast.error("Error in handle delete product");
         }
     };
     return (
