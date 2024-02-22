@@ -184,7 +184,7 @@ export const updateProductController = async (req, res) => {
                 product
             });
     } catch (error) {
-        return res.status(506).send({
+        return res.status(500).send({
             success: false,
             message: "Error in update product",
             error: error.message
