@@ -4,7 +4,7 @@ import userModel from '../models/userModel.js';
 //Protected routes token base
 export const requireSignIn = async (req, res, next) => {
     try {
-        const token = req.headers['authorization'];
+        const token = await req.headers['authorization'];
         if (!token) return res.status(403).send({
             success: false,
             message: "Access denied"
