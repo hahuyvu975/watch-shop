@@ -13,10 +13,10 @@ router.post('/create-product', requireSignIn, isAdmin, formidable(), createProdu
 router.put('/update-product/:id', requireSignIn, isAdmin, formidable(), updateProductController);
 
 //get all product
-router.get('/get-product', requireSignIn, isAdmin, getAllProductController);
+router.get('/get-product', getAllProductController);
 
 //get single product
-router.get('/single-product/:slug', requireSignIn, isAdmin, getSingleProductController)
+router.get('/single-product/:slug', getSingleProductController)
 
 //get photo
 router.get('/product-photo/:pid', productPhotoController)
