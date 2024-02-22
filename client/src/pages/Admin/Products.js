@@ -60,6 +60,7 @@ const Products = () => {
                                         src={`/api/v1/admin/product/product-photo/${p._id}`}
                                         className="card-img-top"
                                         alt={p.name}
+                                        style={{ width: "100%", height: "300px" }}
                                     />
                                     <div className="card-body">
                                         <h5 className="card-title">{p.name}</h5>
