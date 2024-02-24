@@ -13,10 +13,10 @@ router.post('/create-category', requireSignIn, isAdmin, createCategoryController
 router.put('/update-category/:id', requireSignIn, isAdmin, updateCategoryController);
 
 //get list category
-router.get('/get-category', requireSignIn, isAdmin, getAllCategoryController);
+router.get('/get-category', getAllCategoryController);
 
 //single category
-router.get('/single-category/:slug', requireSignIn, isAdmin, singleCategoryController)
+router.get('/single-category/:slug', singleCategoryController)
 
 //delete category
 router.delete('/delete-category/:id', requireSignIn, isAdmin, deleteCategoryController)
